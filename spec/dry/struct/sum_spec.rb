@@ -44,6 +44,16 @@ RSpec.describe Dry::Struct::Sum do
     it 'works with subclasses' do
       expect(sum.(highway)).to be(highway)
     end
+
+    context 'multiple items of the same parent class' do
+      subject(:sum) do
+        Dry::Types['array'].of(Test::City | Test::Street | Test::Highway | Test::Region)
+      end
+
+      it 'works with suclasses' do
+        expect(sum.([highway])).to be([highway])
+      end
+    end
   end
 
   describe '#optional?' do
